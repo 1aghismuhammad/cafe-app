@@ -15,6 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if (request()->user()?->role === 'admin')
+                        <x-nav-link :href="route('admin.cafe-profile.edit')" :active="request()->routeIs('admin.cafe-profile.*')">
+                            Profil Cafe
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -70,6 +75,11 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if (request()->user()?->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.cafe-profile.edit')" :active="request()->routeIs('admin.cafe-profile.*')">
+                    Profil Cafe
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
