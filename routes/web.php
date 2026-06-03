@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\CafeProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\OutletController;
 use App\Http\Controllers\Admin\RestaurantTableController;
+use App\Http\Controllers\Admin\TableQrCodeController;
+use App\Http\Controllers\Customer\OrderTableController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -83,6 +85,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/admin/restaurant-tables/{restaurantTable}', [RestaurantTableController::class, 'destroy'])
         ->middleware('role:admin')
         ->name('admin.restaurant-tables.destroy');
+
+        Route::get('/admin/table-qr-codes', [TableQrCodeController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('admin.table-qr-codes.index');
+
+    Route::post('/admin/table-qr-codes/generate/{restaurantTable}', [TableQrCodeController::class, 'generate'])
+        ->middleware('role:admin')
+        ->name('admin.table-qr-codes.generate');
+
+    Route::get('/admin/table-qr-codes/{tableQrCode}', [TableQrCodeController::class, 'show'])
+        ->middleware('role:admin')
+        ->name('admin.table-qr-codes.show');
+
+    Route::post('/admin/table-qr-codes/{tableQrCode}/regenerate', [TableQrCodeController::class, 'regenerate'])
+        ->middleware('role:admin')
+        ->name('admin.table-qr-codes.regenerate');
+
+    Route::patch('/admin/table-qr-codes/{tableQrCode}/toggle', [TableQrCodeController::class, 'toggle'])
+        ->middleware('role:admin')
+        ->name('admin.table-qr-codes.toggle');
 });
 
 Route::middleware('auth')->group(function () {
@@ -94,6 +116,9 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+
+    Route::get('/order/table/{token}', [OrderTableController::class, 'show'])
+        ->name('customer.order.table');
 });
 
 require __DIR__.'/auth.php';

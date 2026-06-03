@@ -18,4 +18,9 @@ class RestaurantTable extends Model
     {
         return $this->belongsTo(Outlet::class);
     }
+
+    public function tableQrCode()
+    {
+        return $this->hasOne(TableQrCode::class);
+    }
 }

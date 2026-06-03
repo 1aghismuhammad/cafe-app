@@ -125,3 +125,34 @@ Modul Area Meja dilewati sementara karena kebutuhan MVP saat ini cukup menggunak
 
 ### Langkah Berikutnya
 Lanjut ke Checkpoint 4 - Modul QR Meja.
+
+## Checkpoint 4 - Modul QR Meja
+
+Status: Selesai.
+
+### Yang Sudah Dibuat
+- Model TableQrCode
+- Migration tabel table_qr_codes
+- Relasi QR ke RestaurantTable
+- Controller Admin/TableQrCodeController
+- Controller Customer/OrderTableController
+- Route admin QR Meja
+- Route pelanggan /order/table/{token}
+- View daftar QR Meja
+- View detail QR Meja
+- View preview halaman order meja
+- Menu QR Meja di navbar admin
+
+### Fitur yang Sudah Dites
+- Generate QR meja berhasil
+- Token QR berhasil dibuat
+- URL QR berhasil dibuat
+- QR Code berhasil tampil
+- Detail QR meja berhasil tampil
+- QR terhubung ke outlet dan nomor meja yang benar
+
+### Catatan
+URL QR masih menggunakan 127.0.0.1 karena aplikasi masih berjalan lokal. Untuk scan dari HP, APP_URL perlu diarahkan ke IP laptop atau domain production.
+
+### Langkah Berikutnya
+Lanjut ke Checkpoint 5 - Modul Kategori Menu.
