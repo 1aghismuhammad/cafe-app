@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\RestaurantTableController;
 use App\Http\Controllers\Admin\TableQrCodeController;
 use App\Http\Controllers\Customer\OrderTableController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\MenuController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -130,6 +131,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])
         ->middleware('role:admin')
         ->name('admin.categories.destroy');
+
+        Route::get('/admin/menus', [MenuController::class, 'index'])
+            ->middleware('role:admin')
+            ->name('admin.menus.index');
+
+        Route::get('/admin/menus/create', [MenuController::class, 'create'])
+            ->middleware('role:admin')
+            ->name('admin.menus.create');
+
+        Route::post('/admin/menus', [MenuController::class, 'store'])
+            ->middleware('role:admin')
+            ->name('admin.menus.store');
+
+        Route::get('/admin/menus/{menu}/edit', [MenuController::class, 'edit'])
+            ->middleware('role:admin')
+            ->name('admin.menus.edit');
+
+        Route::put('/admin/menus/{menu}', [MenuController::class, 'update'])
+            ->middleware('role:admin')
+            ->name('admin.menus.update');
+
+        Route::delete('/admin/menus/{menu}', [MenuController::class, 'destroy'])
+            ->middleware('role:admin')
+            ->name('admin.menus.destroy');
 });
 
 Route::middleware('auth')->group(function () {

@@ -45,6 +45,12 @@
                             Kategori Menu
                         </x-nav-link>
                     @endif
+
+                    @if (request()->user()?->role === 'admin')
+                        <x-nav-link :href="route('admin.menus.index')" :active="request()->routeIs('admin.menus.*')">
+                            Menu
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -126,6 +132,12 @@
             @if (request()->user()?->role === 'admin')
                 <x-responsive-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
                     Kategori Menu
+                </x-responsive-nav-link>
+            @endif
+
+            @if (request()->user()?->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.menus.index')" :active="request()->routeIs('admin.menus.*')">
+                    Menu
                 </x-responsive-nav-link>
             @endif
         </div>

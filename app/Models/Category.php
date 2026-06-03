@@ -13,4 +13,8 @@ class Category extends Model
         'display_order',
         'status',
     ];
+    public function menus()
+    {
+        return $this->hasMany(Menu::class);
+    }
 }

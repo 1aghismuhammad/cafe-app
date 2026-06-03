@@ -190,5 +190,288 @@ Status: Selesai.
 ### Catatan
 Modul kategori menu menjadi dasar untuk Modul Menu. Setiap menu nanti wajib terhubung ke salah satu kategori.
 
-### Langkah Berikutnya
-Lanjut ke Checkpoint 6 - Modul Menu.
+# Checkpoint 6 - Modul Menu
+
+## Tujuan Checkpoint
+
+Checkpoint 6 dibuat untuk mengelola daftar menu Cafe A berdasarkan kategori yang sudah dibuat. Modul ini menjadi dasar sebelum halaman order pelanggan menampilkan menu.
+
+Struktur relasi:
+
+```text
+Kategori Menu
+↓
+Menu
+↓
+Halaman Order Pelanggan
+```
+
+## Yang Sudah Dibuat
+
+File yang dibuat:
+
+```text
+app/Models/Menu.php
+app/Http/Controllers/Admin/MenuController.php
+database/migrations/create_menus_table.php
+resources/views/admin/menus/index.blade.php
+resources/views/admin/menus/create.blade.php
+resources/views/admin/menus/edit.blade.php
+```
+
+File yang diperbarui:
+
+```text
+app/Models/Category.php
+routes/web.php
+resources/views/layouts/navigation.blade.php
+```
+
+Tabel:
+
+```text
+menus
+```
+
+Kolom utama:
+
+```text
+id
+category_id
+menu_code
+menu_name
+description
+price
+image_path
+preparation_time
+stock_status
+is_active
+created_at
+updated_at
+```
+
+Relasi:
+
+```text
+categories
+↓
+menus
+```
+
+Route:
+
+```text
+GET     /admin/menus
+GET     /admin/menus/create
+POST    /admin/menus
+GET     /admin/menus/{menu}/edit
+PUT     /admin/menus/{menu}
+DELETE  /admin/menus/{menu}
+```
+
+Nama route:
+
+```text
+admin.menus.index
+admin.menus.create
+admin.menus.store
+admin.menus.edit
+admin.menus.update
+admin.menus.destroy
+```
+
+Fitur yang sudah berjalan:
+
+```text
+Daftar menu
+Tambah menu
+Edit menu
+Hapus menu
+Pilih kategori menu
+Kode menu unik
+Nama menu
+Deskripsi menu
+Harga menu
+Estimasi proses
+Status stok
+Status tampil
+Upload foto menu sederhana
+Fallback No Image jika foto kosong
+Menu Menu di navbar admin
+```
+
+Status stok:
+
+```text
+available
+sold_out
+```
+
+Status tampil:
+
+```text
+active
+inactive
+```
+
+Data awal yang dibuat:
+
+```text
+Americano Hot
+Americano Ice
+Cafe Latte Hot
+French Fries
+Chicken Wings
+Nasi Ayam Sambal Matah
+```
+
+Kategori yang sudah terhubung:
+
+```text
+Coffee
+Snack
+Main Course
+```
+
+Testing:
+
+| Pengujian | Status |
+|---|---|
+| Tambah menu | Berhasil |
+| Edit menu | Berhasil |
+| Hapus menu | Berhasil |
+| Validasi kode menu duplikat | Berhasil |
+| Menu tampil di tabel | Berhasil |
+| Kategori tampil di tabel | Berhasil |
+| Harga tampil format rupiah | Berhasil |
+| Status Available tampil benar | Berhasil |
+| Status Active tampil benar | Berhasil |
+| Status Inactive tampil benar | Berhasil |
+| Foto menu tampil jika diunggah | Berhasil |
+| Fallback No Image tampil jika foto kosong | Berhasil |
+| Menu admin tampil di navbar | Berhasil |
+
+Catatan testing:
+
+```text
+Sistem berhasil menolak kode menu yang sudah digunakan.
+Harga besar seperti 2 miliar dapat ditampilkan sesuai format rupiah.
+```
+
+Status akhir:
+
+```text
+Checkpoint 6 selesai
+```
+
+---
+
+# 6. Navbar Admin Saat Ini
+
+Navbar admin saat ini berisi:
+
+```text
+Dashboard
+Profil Cafe
+Outlet
+Meja
+QR Meja
+Kategori Menu
+Menu
+```
+
+Semua menu tersebut ditampilkan untuk role admin.
+
+---
+
+# 7. Fitur yang Belum Dibuat
+
+Fitur berikut belum dibuat:
+
+```text
+Halaman order pelanggan yang menampilkan menu
+Filter menu berdasarkan kategori di halaman pelanggan
+Keranjang
+Checkout
+Order
+Pembayaran manual
+Dashboard order kasir
+Cetak nota pelanggan
+Cetak nota dapur
+Laporan dasar
+Integrasi Midtrans QRIS
+Deploy
+```
+
+---
+
+# 8. Urutan Pengembangan Berikutnya
+
+Urutan berikutnya:
+
+```text
+Checkpoint 7 - Halaman Order Pelanggan
+Checkpoint 8 - Keranjang
+Checkpoint 9 - Checkout
+Checkpoint 10 - Order Masuk Kasir
+Checkpoint 11 - Pembayaran Manual
+Checkpoint 12 - Cetak Nota
+Checkpoint 13 - Laporan Dasar
+Checkpoint 14 - Integrasi Midtrans QRIS
+Checkpoint 15 - Deploy
+```
+
+---
+
+# 9. Rencana Checkpoint 7 - Halaman Order Pelanggan
+
+## Tujuan
+
+Mengembangkan halaman hasil scan QR agar pelanggan dapat melihat kategori dan daftar menu aktif.
+
+Saat ini halaman QR pelanggan baru menampilkan:
+
+```text
+Nama cafe
+Outlet
+Nomor meja
+Kode meja
+Tombol Lanjut Pilih Menu
+```
+
+Pada Checkpoint 7, halaman ini akan dikembangkan agar menampilkan:
+
+```text
+Kategori menu
+Daftar menu berdasarkan kategori
+Nama menu
+Deskripsi menu
+Harga menu
+Foto menu
+Status available
+Tombol tambah ke keranjang
+```
+
+Pada Checkpoint 7, keranjang belum perlu dibuat penuh. Fokus utamanya adalah menampilkan menu pelanggan setelah QR dibuka.
+
+---
+
+# 10. Kesimpulan
+
+Project Cafe A App sudah menyelesaikan enam checkpoint utama. Fondasi sistem sudah cukup kuat untuk masuk ke sisi pelanggan.
+
+Fitur yang sudah selesai meliputi:
+
+```text
+Auth
+Role user
+Dashboard berdasarkan role
+Profil Cafe
+Outlet
+Meja
+QR Meja
+Kategori Menu
+Menu
+```
+
+Tahap berikutnya adalah membuat halaman order pelanggan agar QR meja tidak hanya mengenali meja, tetapi juga menampilkan menu yang bisa dipilih pelanggan.
