@@ -10,14 +10,21 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Navigation Links Desktop -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') || request()->routeIs('kasir.dashboard') || request()->routeIs('owner.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
                     @if (request()->user()?->role === 'admin')
                         <x-nav-link :href="route('admin.cafe-profile.edit')" :active="request()->routeIs('admin.cafe-profile.*')">
                             Profil Cafe
+                        </x-nav-link>
+                    @endif
+
+                    @if (request()->user()?->role === 'admin')
+                        <x-nav-link :href="route('admin.outlets.index')" :active="request()->routeIs('admin.outlets.*')">
+                            Outlet
                         </x-nav-link>
                     @endif
                 </div>
@@ -48,8 +55,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                                onclick="event.preventDefault(); this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
@@ -69,15 +75,22 @@
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
+    <!-- Responsive Navigation Menu Mobile -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') || request()->routeIs('kasir.dashboard') || request()->routeIs('owner.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
             @if (request()->user()?->role === 'admin')
                 <x-responsive-nav-link :href="route('admin.cafe-profile.edit')" :active="request()->routeIs('admin.cafe-profile.*')">
                     Profil Cafe
+                </x-responsive-nav-link>
+            @endif
+
+            @if (request()->user()?->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.outlets.index')" :active="request()->routeIs('admin.outlets.*')">
+                    Outlet
                 </x-responsive-nav-link>
             @endif
         </div>
@@ -99,8 +112,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                        onclick="event.preventDefault(); this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>

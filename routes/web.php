@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\CafeProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\OutletController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,6 +34,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/admin/cafe-profile', [CafeProfileController::class, 'update'])
         ->middleware('role:admin')
         ->name('admin.cafe-profile.update');
+
+    Route::get('/admin/outlets', [OutletController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('admin.outlets.index');
+
+    Route::get('/admin/outlets/create', [OutletController::class, 'create'])
+        ->middleware('role:admin')
+        ->name('admin.outlets.create');
+
+    Route::post('/admin/outlets', [OutletController::class, 'store'])
+        ->middleware('role:admin')
+        ->name('admin.outlets.store');
+
+    Route::get('/admin/outlets/{outlet}/edit', [OutletController::class, 'edit'])
+        ->middleware('role:admin')
+        ->name('admin.outlets.edit');
+
+    Route::put('/admin/outlets/{outlet}', [OutletController::class, 'update'])
+        ->middleware('role:admin')
+        ->name('admin.outlets.update');
+
+    Route::delete('/admin/outlets/{outlet}', [OutletController::class, 'destroy'])
+        ->middleware('role:admin')
+        ->name('admin.outlets.destroy');
 });
 
 Route::middleware('auth')->group(function () {

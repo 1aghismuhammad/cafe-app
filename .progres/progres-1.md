@@ -1,34 +1,65 @@
-# Laporan Progress Project Cafe A App
+# Progress 1 - Fondasi Aplikasi dan Profil Cafe A
 
-## 1. Identitas Project
+## Status
+Checkpoint 1 selesai.
 
-| Bagian | Keterangan |
-|---|---|
-| Nama Project | Cafe A App |
-| Jenis Aplikasi | Sistem pemesanan restoran digital berbasis QR meja |
-| Framework | Laravel |
-| Frontend | Blade Laravel |
-| Database | MySQL |
-| Database Aktif | cafea_db |
-| Mode Pengembangan | Lokal |
-| URL Lokal | http://127.0.0.1:8000 |
-| Status Saat Ini | Fondasi aplikasi dan modul Profil Cafe sudah berjalan |
+## Yang Sudah Dibuat
+- Laravel sudah terinstall
+- Database cafea_db sudah terhubung
+- Laravel Breeze sudah aktif
+- Login, register, logout, dan profile sudah berjalan
+- Role admin, kasir, dan owner sudah dibuat
+- Middleware role sudah dibuat
+- Dashboard berdasarkan role sudah dibuat
+- Modul Profil Cafe A sudah dibuat
+- Navbar admin sudah menampilkan menu Dashboard dan Profil Cafe
 
----
+## Modul Selesai
+### Profil Cafe A
+File yang dibuat:
+- app/Models/CafeProfile.php
+- app/Http/Controllers/Admin/CafeProfileController.php
+- database/migrations/create_cafe_profiles_table.php
+- resources/views/admin/cafe-profile/edit.blade.php
 
-## 2. Gambaran Umum Project
+Data yang bisa dikelola:
+- Nama brand
+- Nama legal usaha
+- Slogan
+- Deskripsi cafe
+- Warna utama
+- Warna sekunder
+- Warna aksen
+- WhatsApp
+- Instagram
+- TikTok
+- Email
+- Google Maps
 
-Cafe A App adalah aplikasi web restoran yang dirancang untuk membantu proses pemesanan makanan dan minuman secara digital. Pada rancangan awal, sistem ini akan mendukung pemesanan melalui QR meja, guest checkout, pembayaran QRIS, nota digital, dashboard kasir, dan laporan dasar.
+## Error yang Sudah Diselesaikan
+- Route profile.edit not defined
+- Undefined CafeProfileController
+- Class App\Models\CafeProfile not found
+- Migration cafe_profiles rusak
+- Error Vite Tailwind Unknown word use strict
 
-Pada tahap awal ini, pengembangan difokuskan pada aplikasi lokal terlebih dahulu. Sistem belum menggunakan domain, subdomain, multi-tenant, dan payment gateway. Tujuan tahap awal adalah memastikan fondasi aplikasi stabil sebelum masuk ke fitur order, QR meja, menu, dan pembayaran.
+## Fitur yang Belum Dibuat
+- Outlet
+- Area meja
+- Meja
+- QR meja
+- Kategori menu
+- Menu
+- Halaman order pelanggan
+- Keranjang
+- Checkout
+- Order masuk kasir
+- Pembayaran manual
+- Cetak nota pelanggan
+- Cetak nota dapur
+- Laporan dasar
+- Midtrans QRIS
+- Deploy
 
----
-
-## 3. Keputusan Teknis yang Sudah Diambil
-
-## 3.1 Belum Menggunakan Domain
-
-Karena domain belum tersedia, aplikasi dijalankan secara lokal melalui:
-
-```text
-http://127.0.0.1:8000
+## Langkah Berikutnya
+Lanjut membuat Modul Outlet Cafe A.
