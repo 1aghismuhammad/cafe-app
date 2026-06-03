@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\OutletController;
 use App\Http\Controllers\Admin\RestaurantTableController;
 use App\Http\Controllers\Admin\TableQrCodeController;
 use App\Http\Controllers\Customer\OrderTableController;
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -105,6 +106,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/admin/table-qr-codes/{tableQrCode}/toggle', [TableQrCodeController::class, 'toggle'])
         ->middleware('role:admin')
         ->name('admin.table-qr-codes.toggle');
+
+        Route::get('/admin/categories', [CategoryController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('admin.categories.index');
+
+    Route::get('/admin/categories/create', [CategoryController::class, 'create'])
+        ->middleware('role:admin')
+        ->name('admin.categories.create');
+
+    Route::post('/admin/categories', [CategoryController::class, 'store'])
+        ->middleware('role:admin')
+        ->name('admin.categories.store');
+
+    Route::get('/admin/categories/{category}/edit', [CategoryController::class, 'edit'])
+        ->middleware('role:admin')
+        ->name('admin.categories.edit');
+
+    Route::put('/admin/categories/{category}', [CategoryController::class, 'update'])
+        ->middleware('role:admin')
+        ->name('admin.categories.update');
+
+    Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])
+        ->middleware('role:admin')
+        ->name('admin.categories.destroy');
 });
 
 Route::middleware('auth')->group(function () {

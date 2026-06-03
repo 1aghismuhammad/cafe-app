@@ -39,6 +39,12 @@
                             QR Meja
                         </x-nav-link>
                     @endif
+
+                    @if (request()->user()?->role === 'admin')
+                        <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                            Kategori Menu
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -114,6 +120,12 @@
             @if (request()->user()?->role === 'admin')
                 <x-responsive-nav-link :href="route('admin.table-qr-codes.index')" :active="request()->routeIs('admin.table-qr-codes.*')">
                     QR Meja
+                </x-responsive-nav-link>
+            @endif
+
+            @if (request()->user()?->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                    Kategori Menu
                 </x-responsive-nav-link>
             @endif
         </div>

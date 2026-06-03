@@ -156,3 +156,39 @@ URL QR masih menggunakan 127.0.0.1 karena aplikasi masih berjalan lokal. Untuk s
 
 ### Langkah Berikutnya
 Lanjut ke Checkpoint 5 - Modul Kategori Menu.
+
+## Checkpoint 5 - Modul Kategori Menu
+
+Status: Selesai.
+
+### Yang Sudah Dibuat
+- Model Category
+- Migration tabel categories
+- Controller Admin/CategoryController
+- Route CRUD kategori menu
+- View daftar kategori
+- View tambah kategori
+- View edit kategori
+- Menu Kategori Menu di navbar admin
+
+### Fitur yang Sudah Dites
+- Tambah kategori berhasil
+- Kategori tampil di tabel
+- Kategori tampil sesuai urutan display_order
+- Status kategori tampil dengan benar
+- Menu Kategori Menu tampil di navbar admin
+
+### Data Awal yang Dibuat
+- Coffee
+- Non-Coffee
+- Tea Series
+- Main Course
+- Snack
+- Dessert
+- Paket Hemat
+
+### Catatan
+Modul kategori menu menjadi dasar untuk Modul Menu. Setiap menu nanti wajib terhubung ke salah satu kategori.
+
+### Langkah Berikutnya
+Lanjut ke Checkpoint 6 - Modul Menu.
