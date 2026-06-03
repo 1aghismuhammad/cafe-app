@@ -18,4 +18,9 @@ class Outlet extends Model
         'close_time',
         'status',
     ];
+
+    public function restaurantTables()
+    {
+        return $this->hasMany(RestaurantTable::class);
+    }
 }

@@ -27,6 +27,12 @@
                             Outlet
                         </x-nav-link>
                     @endif
+
+                    @if (request()->user()?->role === 'admin')
+                        <x-nav-link :href="route('admin.restaurant-tables.index')" :active="request()->routeIs('admin.restaurant-tables.*')">
+                            Meja
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -50,7 +56,6 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -93,6 +98,12 @@
                     Outlet
                 </x-responsive-nav-link>
             @endif
+
+            @if (request()->user()?->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.restaurant-tables.index')" :active="request()->routeIs('admin.restaurant-tables.*')">
+                    Meja
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
@@ -107,7 +118,6 @@
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
-                <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 

@@ -63,3 +63,65 @@ Data yang bisa dikelola:
 
 ## Langkah Berikutnya
 Lanjut membuat Modul Outlet Cafe A.
+
+## Checkpoint 2 - Modul Outlet Cafe A
+
+Status: Selesai.
+
+### Yang Sudah Dibuat
+- Model Outlet
+- Migration tabel outlets
+- Controller Admin/OutletController
+- Route CRUD Outlet
+- View daftar outlet
+- View tambah outlet
+- View edit outlet
+- Menu Outlet di navbar admin
+
+### Fitur yang Sudah Dites
+- Tambah outlet berhasil
+- Edit outlet berhasil
+- Hapus outlet berhasil
+- Data outlet tampil di tabel
+- Pesan sukses tampil setelah aksi CRUD
+- Route admin.outlets.* berjalan normal
+
+### Catatan
+Outlet menjadi dasar untuk modul Area Meja, Meja, QR Meja, Order, Nota, dan Laporan.
+
+### Langkah Berikutnya
+Lanjut ke Modul Area Meja.
+
+## Checkpoint 3 - Modul Meja
+
+Status: Selesai.
+
+### Yang Sudah Dibuat
+- Model RestaurantTable
+- Migration tabel restaurant_tables
+- Relasi restaurant_tables ke outlets
+- Relasi Outlet ke RestaurantTable
+- Controller Admin/RestaurantTableController
+- Route CRUD Meja
+- View daftar meja
+- View tambah meja
+- View edit meja
+- Menu Meja di navbar admin
+
+### Fitur yang Sudah Dites
+- Tambah meja berhasil
+- Data meja tampil di tabel
+- Meja terhubung ke outlet
+- Status meja tampil dengan benar
+- Menu Meja tampil di navbar admin
+
+### Data Awal yang Dibuat
+- Meja 1, kode T01, kapasitas 2
+- Meja 2, kode T02, kapasitas 2
+- Meja 3, kode T03, kapasitas 4
+
+### Catatan
+Modul Area Meja dilewati sementara karena kebutuhan MVP saat ini cukup menggunakan nomor meja. Struktur relasi dibuat langsung dari outlet ke meja.
+
+### Langkah Berikutnya
+Lanjut ke Checkpoint 4 - Modul QR Meja.

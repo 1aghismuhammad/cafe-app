@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\CafeProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\OutletController;
+use App\Http\Controllers\Admin\RestaurantTableController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -58,6 +59,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/admin/outlets/{outlet}', [OutletController::class, 'destroy'])
         ->middleware('role:admin')
         ->name('admin.outlets.destroy');
+
+        Route::get('/admin/restaurant-tables', [RestaurantTableController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('admin.restaurant-tables.index');
+
+    Route::get('/admin/restaurant-tables/create', [RestaurantTableController::class, 'create'])
+        ->middleware('role:admin')
+        ->name('admin.restaurant-tables.create');
+
+    Route::post('/admin/restaurant-tables', [RestaurantTableController::class, 'store'])
+        ->middleware('role:admin')
+        ->name('admin.restaurant-tables.store');
+
+    Route::get('/admin/restaurant-tables/{restaurantTable}/edit', [RestaurantTableController::class, 'edit'])
+        ->middleware('role:admin')
+        ->name('admin.restaurant-tables.edit');
+
+    Route::put('/admin/restaurant-tables/{restaurantTable}', [RestaurantTableController::class, 'update'])
+        ->middleware('role:admin')
+        ->name('admin.restaurant-tables.update');
+
+    Route::delete('/admin/restaurant-tables/{restaurantTable}', [RestaurantTableController::class, 'destroy'])
+        ->middleware('role:admin')
+        ->name('admin.restaurant-tables.destroy');
 });
 
 Route::middleware('auth')->group(function () {
