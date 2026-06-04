@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\CafeProfile;
+use App\Models\Category;
 use App\Models\TableQrCode;
 
 class OrderTableController extends Controller
@@ -18,6 +20,26 @@ class OrderTableController extends Controller
             abort(404, 'QR meja tidak aktif atau tidak valid.');
         }
 
-        return view('customer.order-table-preview', compact('qrCode'));
+        $profile = CafeProfile::first();
+
+        $categories = Category::where('status', 'active')
+            ->whereHas('menus', function ($query) {
+                $query->where('is_active', true)
+                    ->where('stock_status', 'available');
+            })
+            ->with(['menus' => function ($query) {
+                $query->where('is_active', true)
+                    ->where('stock_status', 'available')
+                    ->orderBy('menu_name');
+            }])
+            ->orderBy('display_order')
+            ->orderBy('category_name')
+            ->get();
+
+        return view('customer.order-table-preview', compact(
+            'qrCode',
+            'profile',
+            'categories'
+        ));
     }
 }
