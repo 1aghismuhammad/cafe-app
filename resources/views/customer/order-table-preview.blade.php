@@ -53,7 +53,19 @@
                 </div>
             </div>
 
-            <div class="px-5 py-5">
+            <div class="px-5 py-5 pb-28">
+                @if (session('success'))
+                    <div class="mb-4 rounded-xl bg-green-100 px-4 py-3 text-sm text-green-800">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="mb-4 rounded-xl bg-red-100 px-4 py-3 text-sm text-red-800">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <div class="mb-4">
                     <h2 class="text-lg font-bold">
                         Pilih Menu
@@ -107,20 +119,16 @@
                                                 </div>
 
                                                 <div class="min-w-0 flex-1">
-                                                    <div class="flex items-start justify-between gap-2">
-                                                        <div>
-                                                            <h4 class="font-semibold leading-tight">
-                                                                {{ $menu->menu_name }}
-                                                            </h4>
+                                                    <h4 class="font-semibold leading-tight">
+                                                        {{ $menu->menu_name }}
+                                                    </h4>
 
-                                                            <p class="mt-1 text-xs text-gray-500">
-                                                                {{ $menu->preparation_time }} menit
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                    <p class="mt-1 text-xs text-gray-500">
+                                                        {{ $menu->preparation_time }} menit
+                                                    </p>
 
                                                     @if ($menu->description)
-                                                        <p class="mt-2 line-clamp-2 text-sm text-gray-500">
+                                                        <p class="mt-2 text-sm text-gray-500">
                                                             {{ $menu->description }}
                                                         </p>
                                                     @endif
@@ -130,11 +138,14 @@
                                                             Rp{{ number_format($menu->price, 0, ',', '.') }}
                                                         </p>
 
-                                                        <button type="button"
-                                                            onclick="alert('Fitur keranjang akan dibuat pada checkpoint berikutnya.')"
-                                                            class="rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700">
-                                                            Tambah
-                                                        </button>
+                                                        <form method="POST" action="{{ route('customer.cart.add', [$token, $menu]) }}">
+                                                            @csrf
+
+                                                            <button type="submit"
+                                                                class="rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700">
+                                                                Tambah
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -157,11 +168,27 @@
                 @endif
             </div>
 
-            <div class="px-5 pb-8">
-                <div class="rounded-2xl bg-gray-50 p-4 text-center text-xs text-gray-500">
-                    Keranjang dan checkout akan dibuat pada checkpoint berikutnya.
+            @if ($cartSummary['total_qty'] > 0)
+                <div class="fixed bottom-0 left-0 right-0 z-20">
+                    <div class="mx-auto max-w-md bg-white border-t p-4 shadow-lg">
+                        <a href="{{ route('customer.cart.show', $token) }}"
+                            class="flex items-center justify-between rounded-2xl bg-gray-900 px-5 py-4 text-white">
+                            <div>
+                                <p class="text-sm font-semibold">
+                                    Lihat Keranjang
+                                </p>
+                                <p class="text-xs text-gray-300">
+                                    {{ $cartSummary['total_qty'] }} item
+                                </p>
+                            </div>
+
+                            <div class="font-bold">
+                                Rp{{ number_format($cartSummary['total_price'], 0, ',', '.') }}
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 </body>

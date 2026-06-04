@@ -36,10 +36,31 @@ class OrderTableController extends Controller
             ->orderBy('category_name')
             ->get();
 
+        $cart = session()->get('cart_' . $token, []);
+        $cartSummary = $this->cartSummary($cart);
+
         return view('customer.order-table-preview', compact(
             'qrCode',
             'profile',
-            'categories'
+            'categories',
+            'token',
+            'cartSummary'
         ));
+    }
+
+    private function cartSummary(array $cart): array
+    {
+        $totalQty = 0;
+        $totalPrice = 0;
+
+        foreach ($cart as $item) {
+            $totalQty += $item['qty'];
+            $totalPrice += $item['subtotal'];
+        }
+
+        return [
+            'total_qty' => $totalQty,
+            'total_price' => $totalPrice,
+        ];
     }
 }

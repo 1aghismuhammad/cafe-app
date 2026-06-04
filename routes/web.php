@@ -10,6 +10,7 @@ use App\Http\Controllers\Customer\OrderTableController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Customer\CartController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,7 +27,24 @@ Route::get('/', function () {
 
 Route::get('/order/table/{token}', [OrderTableController::class, 'show'])
     ->name('customer.order.table');
+    
+Route::post('/order/table/{token}/cart/add/{menu}', [CartController::class, 'add'])
+    ->name('customer.cart.add');
 
+Route::get('/order/table/{token}/cart', [CartController::class, 'show'])
+    ->name('customer.cart.show');
+
+Route::patch('/order/table/{token}/cart/{menu}/increase', [CartController::class, 'increase'])
+    ->name('customer.cart.increase');
+
+Route::patch('/order/table/{token}/cart/{menu}/decrease', [CartController::class, 'decrease'])
+    ->name('customer.cart.decrease');
+
+Route::delete('/order/table/{token}/cart/{menu}/remove', [CartController::class, 'remove'])
+    ->name('customer.cart.remove');
+
+Route::patch('/order/table/{token}/cart/{menu}/note', [CartController::class, 'updateNote'])
+    ->name('customer.cart.note');
 /*
 |--------------------------------------------------------------------------
 | Authenticated Dashboard Redirect
