@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\CheckoutController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,6 +46,15 @@ Route::delete('/order/table/{token}/cart/{menu}/remove', [CartController::class,
 
 Route::patch('/order/table/{token}/cart/{menu}/note', [CartController::class, 'updateNote'])
     ->name('customer.cart.note');
+
+Route::get('/order/table/{token}/checkout', [CheckoutController::class, 'show'])
+    ->name('customer.checkout.show');
+
+Route::post('/order/table/{token}/checkout', [CheckoutController::class, 'store'])
+    ->name('customer.checkout.store');
+
+Route::get('/order/table/{token}/success/{order}', [CheckoutController::class, 'success'])
+    ->name('customer.checkout.success');
 /*
 |--------------------------------------------------------------------------
 | Authenticated Dashboard Redirect

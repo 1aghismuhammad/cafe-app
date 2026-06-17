@@ -935,3 +935,20 @@ Pelanggan dapat membuka halaman keranjang
 Project Cafe A App sudah menyelesaikan delapan checkpoint utama. Fondasi sistem admin dan master data sudah stabil. Sisi pelanggan juga sudah mulai berjalan karena pelanggan dapat membuka QR, melihat menu, dan memasukkan menu ke keranjang.
 
 Tahap berikutnya adalah Checkpoint 9, yaitu Guest Checkout. Pada tahap tersebut, isi keranjang akan diubah menjadi order yang tersimpan ke database.
+
+
+# 🟣 CHECKPOINT 9 - GUEST CHECKOUT SYSTEM (FULL DOCUMENTATION)
+
+---
+
+# 📌 STATUS
+Checkpoint 9 selesai dan sudah terintegrasi dengan sistem cart (Checkpoint 8).
+
+---
+
+# 🎯 TUJUAN CHECKPOINT
+
+Checkpoint ini mengubah sistem:
+
+```text
+Session Cart → Checkout Form → Database Orders

@@ -160,11 +160,10 @@
                                 Tambah Menu
                             </a>
 
-                            <button type="button"
-                                onclick="alert('Checkout akan dibuat pada checkpoint berikutnya.')"
-                                class="rounded-xl bg-gray-900 px-4 py-3 text-sm font-semibold text-white">
+                            <a href="{{ route('customer.checkout.show', $token) }}"
+                                class="rounded-xl bg-gray-900 px-4 py-3 text-center text-sm font-semibold text-white">
                                 Lanjut Checkout
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
