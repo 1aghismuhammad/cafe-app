@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Cashier\OrderController as CashierOrderController;
+use App\Http\Controllers\Cashier\PaymentController as CashierPaymentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -107,6 +108,9 @@ Route::prefix('kasir')
 
         Route::patch('/orders/{order}/status', [CashierOrderController::class, 'updateStatus'])
             ->name('orders.update-status');
+
+        Route::patch('/orders/{order}/payment-status', [CashierPaymentController::class, 'updateStatus'])
+            ->name('orders.update-payment-status');
     });
 
 /*
