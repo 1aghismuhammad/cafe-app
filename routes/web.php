@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CheckoutController;
+use App\Http\Controllers\Cashier\OrderController as CashierOrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -84,6 +85,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('role:owner')
         ->name('owner.dashboard');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| Kasir Routes
+|--------------------------------------------------------------------------
+| Route operasional kasir dibuat terpisah dari admin.
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('kasir')
+    ->name('kasir.')
+    ->middleware(['auth', 'verified', 'role:kasir'])
+    ->group(function () {
+        Route::get('/orders', [CashierOrderController::class, 'index'])
+            ->name('orders.index');
+
+        Route::get('/orders/{order}', [CashierOrderController::class, 'show'])
+            ->name('orders.show');
+
+        Route::patch('/orders/{order}/status', [CashierOrderController::class, 'updateStatus'])
+            ->name('orders.update-status');
+    });
 
 /*
 |--------------------------------------------------------------------------

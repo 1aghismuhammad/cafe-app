@@ -51,6 +51,12 @@
                             Menu
                         </x-nav-link>
                     @endif
+
+                    @if (request()->user()?->role === 'kasir')
+                        <x-nav-link :href="route('kasir.orders.index')" :active="request()->routeIs('kasir.orders.*')">
+                            Order Masuk
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -138,6 +144,12 @@
             @if (request()->user()?->role === 'admin')
                 <x-responsive-nav-link :href="route('admin.menus.index')" :active="request()->routeIs('admin.menus.*')">
                     Menu
+                </x-responsive-nav-link>
+            @endif
+
+            @if (request()->user()?->role === 'kasir')
+                <x-responsive-nav-link :href="route('kasir.orders.index')" :active="request()->routeIs('kasir.orders.*')">
+                    Order Masuk
                 </x-responsive-nav-link>
             @endif
         </div>
