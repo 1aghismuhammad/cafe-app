@@ -5,10 +5,17 @@
                 Detail Order {{ $order->order_code }}
             </h2>
 
-            <a href="{{ route('kasir.orders.index') }}"
-                class="rounded-md bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">
-                Kembali
-            </a>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('kasir.orders.receipt', $order) }}" target="_blank"
+                    class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700">
+                    Cetak Nota
+                </a>
+
+                <a href="{{ route('kasir.orders.index') }}"
+                    class="rounded-md bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">
+                    Kembali
+                </a>
+            </div>
         </div>
     </x-slot>
 
