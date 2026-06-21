@@ -15,6 +15,7 @@ use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Cashier\OrderController as CashierOrderController;
 use App\Http\Controllers\Cashier\PaymentController as CashierPaymentController;
 use App\Http\Controllers\Cashier\ReceiptController as CashierReceiptController;
+use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -83,7 +84,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('role:kasir')
         ->name('kasir.dashboard');
 
-    Route::get('/owner/dashboard', [DashboardController::class, 'owner'])
+    Route::get('/owner/dashboard', [OwnerDashboardController::class, 'index'])
         ->middleware('role:owner')
         ->name('owner.dashboard');
 });
