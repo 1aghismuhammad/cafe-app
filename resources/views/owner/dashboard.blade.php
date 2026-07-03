@@ -14,6 +14,11 @@
                         <p class="mt-1 text-sm text-gray-600">
                             Data dihitung dari order yang sudah masuk ke sistem. Omzet hanya menghitung order dengan status pembayaran paid.
                         </p>
+
+                        <a href="{{ route('owner.reports.sales') }}"
+                            class="inline-flex rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700">
+                            Lihat Laporan Detail
+                        </a>
                     </div>
 
                     <form method="GET" action="{{ route('owner.dashboard') }}" class="grid grid-cols-1 gap-3 sm:grid-cols-3">
