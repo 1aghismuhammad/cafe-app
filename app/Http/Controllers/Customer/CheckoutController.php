@@ -7,6 +7,7 @@ use App\Models\Menu;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\TableQrCode;
+use App\Services\MidtransQrisService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -71,7 +72,7 @@ class CheckoutController extends Controller
                 'customer_phone' => $validated['customer_phone'] ?? null,
                 'customer_note' => $validated['customer_note'] ?? null,
                 'total_amount' => $cartSummary['total_price'],
-                'status' => 'pending',
+                'status' => 'awaiting_payment',
                 'payment_status' => 'unpaid',
             ]);
 
@@ -87,12 +88,14 @@ class CheckoutController extends Controller
                 ]);
             }
 
+            app(MidtransQrisService::class)->createPayment($order);
+
             return $order;
         });
 
         session()->forget($this->cartKey($token));
 
-        return redirect()->route('customer.checkout.success', [
+        return redirect()->route('customer.payment.qris.show', [
             'token' => $token,
             'order' => $order->id,
         ]);
