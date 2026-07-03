@@ -17,6 +17,8 @@ use App\Http\Controllers\Cashier\PaymentController as CashierPaymentController;
 use App\Http\Controllers\Cashier\ReceiptController as CashierReceiptController;
 use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Controllers\Owner\SalesReportController;
+use App\Http\Controllers\Customer\PaymentController as CustomerPaymentController;
+use App\Http\Controllers\Webhook\MidtransWebhookController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -60,6 +62,16 @@ Route::post('/order/table/{token}/checkout', [CheckoutController::class, 'store'
 
 Route::get('/order/table/{token}/success/{order}', [CheckoutController::class, 'success'])
     ->name('customer.checkout.success');
+
+Route::get('/order/table/{token}/payment/qris/{order}', [CustomerPaymentController::class, 'showQris'])
+    ->name('customer.payment.qris.show');
+
+Route::post('/order/table/{token}/payment/qris/{order}/check', [CustomerPaymentController::class, 'checkStatus'])
+    ->name('customer.payment.qris.check');
+
+Route::post('/midtrans/notification', [MidtransWebhookController::class, 'handle'])
+    ->name('midtrans.notification');
+
 /*
 |--------------------------------------------------------------------------
 | Authenticated Dashboard Redirect
@@ -121,6 +133,9 @@ Route::prefix('kasir')
 
             Route::get('/orders/{order}/receipt', [CashierReceiptController::class, 'show'])
             ->name('orders.receipt');
+
+            Route::post('/orders/{order}/payment/check-midtrans', [CashierPaymentController::class, 'checkMidtransStatus'])
+            ->name('orders.check-midtrans-payment');
     });
 
 /*

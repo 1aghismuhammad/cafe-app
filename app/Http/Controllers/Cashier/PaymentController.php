@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Services\MidtransQrisService;
 
 class PaymentController extends Controller
 {
@@ -28,5 +29,22 @@ class PaymentController extends Controller
         return redirect()
             ->route('kasir.orders.show', $order)
             ->with('success', 'Status pembayaran berhasil diperbarui.');
+    }
+
+    public function checkMidtransStatus(Order $order, MidtransQrisService $midtransQrisService)
+    {
+        $order->load('payment');
+
+        if (! $order->payment) {
+            return redirect()
+                ->route('kasir.orders.show', $order)
+                ->with('error', 'Data pembayaran Midtrans tidak ditemukan.');
+        }
+
+        $midtransQrisService->checkStatus($order->payment);
+
+        return redirect()
+            ->route('kasir.orders.show', $order)
+            ->with('success', 'Status pembayaran Midtrans berhasil diperiksa.');
     }
 }

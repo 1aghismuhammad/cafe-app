@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 class OrderController extends Controller
 {
     private array $statuses = [
+        'awaiting_payment',
         'pending',
         'confirmed',
         'preparing',
@@ -22,7 +23,7 @@ class OrderController extends Controller
     {
         $status = $request->query('status');
 
-        $orders = Order::with(['restaurantTable.outlet', 'outlet'])
+        $orders = Order::with(['restaurantTable.outlet', 'outlet', 'payment'])
             ->when(in_array($status, $this->statuses, true), function ($query) use ($status) {
                 $query->where('status', $status);
             })
@@ -42,7 +43,7 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        $order->load(['items', 'restaurantTable.outlet', 'outlet']);
+        $order->load(['items', 'restaurantTable.outlet', 'outlet', 'payment']);
 
         $statusOptions = $this->statusOptions();
         $paymentStatusOptions = $this->paymentStatusOptions();
@@ -78,6 +79,7 @@ class OrderController extends Controller
     private function statusOptions(): array
     {
         return [
+            'awaiting_payment' => 'Awaiting Payment',
             'pending' => 'Pending',
             'confirmed' => 'Confirmed',
             'preparing' => 'Preparing',

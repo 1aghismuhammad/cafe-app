@@ -209,6 +209,64 @@
                                 Simpan Pembayaran
                             </button>
                         </form>
+
+                        @if ($order->payment)
+                            <div class="mt-5 rounded-lg border border-gray-200 bg-gray-50 p-4">
+                                <h4 class="mb-3 text-sm font-semibold text-gray-900">
+                                    Informasi Pembayaran QRIS
+                                </h4>
+
+                                <div class="space-y-3 text-sm">
+                                    <div>
+                                        <div class="text-gray-500">Metode</div>
+                                        <div class="font-medium text-gray-900">
+                                            {{ strtoupper($order->payment->payment_type) }}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="text-gray-500">Status Midtrans</div>
+                                        <div class="font-medium text-gray-900">
+                                            {{ ucfirst($order->payment->transaction_status) }}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="text-gray-500">Midtrans Order ID</div>
+                                        <div class="font-medium text-gray-900">
+                                            {{ $order->payment->midtrans_order_id }}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="text-gray-500">Transaction ID</div>
+                                        <div class="font-medium text-gray-900">
+                                            {{ $order->payment->transaction_id ?? '-' }}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="text-gray-500">Waktu Lunas</div>
+                                        <div class="font-medium text-gray-900">
+                                            {{ $order->payment->paid_at ? $order->payment->paid_at->format('d/m/Y H:i') : '-' }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <form
+                                    action="{{ route('kasir.orders.check-midtrans-payment', $order) }}"
+                                    method="POST"
+                                    class="mt-4"
+                                >
+                                    @csrf
+
+                                    <button type="submit"
+                                        class="w-full rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white hover:bg-gray-700">
+                                        Cek Status Midtrans
+                                    </button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
