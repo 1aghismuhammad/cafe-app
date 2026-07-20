@@ -31,6 +31,9 @@ class MidtransQrisService
                 'order_id' => $midtransOrderId,
                 'gross_amount' => (int) $order->total_amount,
             ],
+            'qris' => [
+                'acquirer' => 'gopay',
+            ],
             'customer_details' => [
                 'first_name' => $order->customer_name,
                 'phone' => $order->customer_phone,
@@ -54,10 +57,22 @@ class MidtransQrisService
             ->post(config('midtrans.base_url') . '/v2/charge', $payload);
 
         if (! $response->successful()) {
-            throw new RuntimeException('Gagal membuat transaksi QRIS Midtrans.');
+            throw new RuntimeException(
+                $response->json('status_message') ??
+                'Gagal membuat transaksi QRIS Midtrans.'
+            );
         }
 
         $responseData = $response->json();
+        $qrUrl = $this->extractQrUrl($responseData);
+        $qrString = $responseData['qr_string'] ?? null;
+
+        if (! $qrUrl && ! $qrString) {
+            throw new RuntimeException(
+                $responseData['status_message'] ??
+                'Data QRIS tidak ditemukan pada respons Midtrans.'
+            );
+        }
 
         return Payment::create([
             'order_id' => $order->id,
@@ -68,7 +83,7 @@ class MidtransQrisService
             'currency' => $responseData['currency'] ?? 'IDR',
             'transaction_status' => $responseData['transaction_status'] ?? 'pending',
             'fraud_status' => $responseData['fraud_status'] ?? null,
-            'qr_url' => $this->extractQrUrl($responseData),
+            'qr_url' => $qrUrl,
             'raw_response' => $responseData,
         ]);
     }
@@ -189,7 +204,10 @@ class MidtransQrisService
     private function extractQrUrl(array $responseData): ?string
     {
         foreach ($responseData['actions'] ?? [] as $action) {
-            if (($action['name'] ?? null) === 'generate-qr-code') {
+            if (
+                ($action['name'] ?? null) === 'generate-qr-code' ||
+                ($action['name'] ?? null) === 'generate-qr-code-v2'
+            ) {
                 return $action['url'] ?? null;
             }
         }
