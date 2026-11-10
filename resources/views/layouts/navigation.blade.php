@@ -16,7 +16,10 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    @if (request()->user()?->role === 'admin')
+                    @if(Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                            {{ __('Users') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.cafe-profile.edit')" :active="request()->routeIs('admin.cafe-profile.*')">
                             Profil Cafe
                         </x-nav-link>
@@ -111,9 +114,12 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            @if (request()->user()?->role === 'admin')
+            @if(Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                    {{ __('Users') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.cafe-profile.edit')" :active="request()->routeIs('admin.cafe-profile.*')">
-                    Profil Cafe
+                    {{ __('Profil Cafe') }}
                 </x-responsive-nav-link>
             @endif
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cashier;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use App\Services\MidtransQrisService;
 
@@ -18,6 +19,8 @@ class PaymentController extends Controller
 
     public function updateStatus(Request $request, Order $order)
     {
+        Gate::authorize('update', $order);
+
         $validated = $request->validate([
             'payment_status' => ['required', Rule::in($this->paymentStatuses)],
         ]);
@@ -33,6 +36,8 @@ class PaymentController extends Controller
 
     public function checkMidtransStatus(Order $order, MidtransQrisService $midtransQrisService)
     {
+        Gate::authorize('update', $order);
+
         $order->load('payment');
 
         if (! $order->payment) {

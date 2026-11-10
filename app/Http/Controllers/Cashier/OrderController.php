@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cashier;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
@@ -23,7 +24,10 @@ class OrderController extends Controller
     {
         $status = $request->query('status');
 
+        $outletIds = $request->user()->outlets->pluck('id');
+
         $orders = Order::with(['restaurantTable.outlet', 'outlet', 'payment'])
+            ->whereIn('outlet_id', $outletIds)
             ->when(in_array($status, $this->statuses, true), function ($query) use ($status) {
                 $query->where('status', $status);
             })
@@ -43,6 +47,8 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
+        Gate::authorize('view', $order);
+
         $order->load(['items', 'restaurantTable.outlet', 'outlet', 'payment']);
 
         $statusOptions = $this->statusOptions();
@@ -57,6 +63,8 @@ class OrderController extends Controller
 
     public function updateStatus(Request $request, Order $order)
     {
+        Gate::authorize('update', $order);
+
         $validated = $request->validate([
             'status' => ['required', Rule::in($this->statuses)],
         ]);

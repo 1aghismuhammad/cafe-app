@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\OutletController;
 use App\Http\Controllers\Admin\RestaurantTableController;
 use App\Http\Controllers\Admin\TableQrCodeController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Customer\OrderTableController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -79,7 +80,7 @@ Route::post('/midtrans/notification', [MidtransWebhookController::class, 'handle
 */
 
 Route::get('/dashboard', [DashboardController::class, 'redirect'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth'])
     ->name('dashboard');
 
 /*
@@ -88,7 +89,7 @@ Route::get('/dashboard', [DashboardController::class, 'redirect'])
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])
         ->middleware('role:admin')
         ->name('admin.dashboard');
@@ -117,7 +118,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::prefix('kasir')
     ->name('kasir.')
-    ->middleware(['auth', 'verified', 'role:kasir'])
+    ->middleware(['auth', 'role:kasir'])
     ->group(function () {
         Route::get('/orders', [CashierOrderController::class, 'index'])
             ->name('orders.index');
@@ -148,7 +149,7 @@ Route::prefix('kasir')
 
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware(['auth', 'verified', 'role:admin'])
+    ->middleware(['auth', 'role:admin'])
     ->group(function () {
         Route::get('/cafe-profile', [CafeProfileController::class, 'edit'])
             ->name('cafe-profile.edit');
@@ -242,6 +243,30 @@ Route::prefix('admin')
 
         Route::delete('/menus/{menu}', [MenuController::class, 'destroy'])
             ->name('menus.destroy');
+
+        /*
+        |--------------------------------------------------------------------------
+        | User Management Routes
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/users', [UserController::class, 'index'])
+            ->name('users.index');
+
+        Route::get('/users/create', [UserController::class, 'create'])
+            ->name('users.create');
+
+        Route::post('/users', [UserController::class, 'store'])
+            ->name('users.store');
+
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])
+            ->name('users.edit');
+
+        Route::put('/users/{user}', [UserController::class, 'update'])
+            ->name('users.update');
+
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])
+            ->name('users.destroy');
     });
 
 /*
@@ -256,9 +281,6 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('/profile', [ProfileController::class, 'update'])
         ->name('profile.update');
-
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
